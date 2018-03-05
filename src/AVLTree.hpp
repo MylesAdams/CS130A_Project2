@@ -61,15 +61,11 @@ public:
     static void rotateLeft(AVLNode*& root);
     static void rotateRight(AVLNode*& root);
     void insertWord(std::string word);
-    void insertWord(AVLNode*& root, std::string& word);
     bool searchWord(std::string word);
     void deleteWord(std::string& word);
-    void deleteWord(AVLNode*& node, AVLNode*& parent, std::string& word);
     AVLNode* searchNode(std::string word);
-    AVLNode* findMinimum(AVLNode* node);
     std::vector<std::string> sort();
     void rangeSearch(std::string first, std::string last);
-
 
 private:
     void balanceTree(AVLNode*& root);
@@ -77,6 +73,9 @@ private:
     static int getBalance(AVLNode* root);
     void inOrder(AVLNode* root, std::vector<std::string>& vec);
     void inOrderRange(AVLNode* root, std::string first, std::string last);
+    void deleteWord(AVLNode*& node, AVLNode*& parent, std::string& word);
+    void insertWord(AVLNode*& root, std::string& word);
+    AVLNode* findMinimum(AVLNode* node);
 
 
 
