@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "AVLTree.hpp"
+#include "TwoFiveTree.hpp"
 
 int main()
 {
@@ -50,20 +51,45 @@ int main()
 //    tree->insertWord(b);
 //    tree->deleteWord(d);
 
-    tree->insertWord("18");
-    tree->insertWord("23");
-    tree->insertWord("27");
-    tree->insertWord("13");
-    tree->insertWord("16");
-    tree->insertWord("10");
-    tree->insertWord("33");
-    tree->insertWord("39");
-    tree->insertWord("28");
+//    tree->insertWord("18");
+//    tree->insertWord("23");
+//    tree->insertWord("27");
+//    tree->insertWord("13");
+//    tree->insertWord("16");
+//    tree->insertWord("10");
+//    tree->insertWord("33");
+//    tree->insertWord("39");
+//    tree->insertWord("28");
+
+
+//    std::vector<AVLTree::AVLNode*> nodes;
+//
+//    AVLTree::AVLNode* node = new AVLTree::AVLNode("a");
+//    nodes.push_back(node);
+//
+//    AVLTree::AVLNode* nodeptr = nodes[0];
+//
+//    nodes.erase(nodes.begin(), nodes.end());
+//
+//    TwoFiveTree::TwoFiveNode* node1 = new TwoFiveTree::TwoFiveNode("a");
+//    TwoFiveTree::TwoFiveNode* node2 = new TwoFiveTree::TwoFiveNode("b");
+//
+//    std::vector<TwoFiveTree::TwoFiveNode*>* moreNodes = new std::vector<TwoFiveTree::TwoFiveNode*>({node1, node2});
+//
+//    std::cout << (*(*moreNodes)[0]->data)[0]->word << std::endl;
+//    std::cout << (*(*moreNodes)[1]->data)[0]->word << std::endl;
+//
+//    std::cout << moreNodes->size() << std::endl;
+//    std::cout << (*(*moreNodes)[1]->data).size() << std::endl;
 
 
 
+//    std::cout << nodeptr->data << nodeptr->count << nodes.size() << std::endl;
 
 
+//    std::vector<TwoFiveTree::TwoFiveNode*>* nodes2 = new std::vector<TwoFiveTree::TwoFiveNode*>(5);
+//    std::cout << nodes2->size()<< std::endl;
+//    std::cout << ((*nodes2)[0] == nullptr) << std::endl;
 
 
 
@@ -72,6 +98,50 @@ int main()
 //    tree->root->left->left = new AVLTree::AVLNode("A");
 
 //    AVLTree::rotateRight(tree->root);
+
+    TwoFiveTree* tft = new TwoFiveTree();
+
+    tft->insertWord("30");
+//    std::cout << (*tft->getRoot()->data)[0]->word << std::endl;
+    tft->insertWord("10");
+    tft->insertWord("15");
+    tft->insertWord("40");
+    tft->insertWord("45");
+    tft->insertWord("20");
+    tft->insertWord("50");
+    tft->insertWord("55");
+    tft->insertWord("60");
+    tft->insertWord("24");
+    tft->insertWord("28");
+    tft->insertWord("12");
+    tft->insertWord("11");
+    tft->insertWord("14");
+    tft->insertWord("56");
+    tft->insertWord("57");
+    tft->insertWord("70");
+
+
+
+
+
+    for (int i = 0; i < tft->getRoot()->numData; i++)
+    {
+        for (int j = 0; j < (*tft->getRoot()->pointers)[i]->data->size(); j++)
+        {
+            std::cout << (*(*tft->getRoot()->pointers)[i]->data)[j]->word << std::endl;
+        }
+        std::cout << (*tft->getRoot()->data)[i]->word << std::endl;
+    }
+
+    int index = tft->getRoot()->numData;
+    std::vector<TwoFiveTree::DataPair*> vec = (*(*tft->getRoot()->pointers)[index]->data);
+    int endSize = vec.size();
+    for (int i = 0; i < endSize; i++)
+    {
+        std::cout << (*(*tft->getRoot()->pointers)[tft->getRoot()->numData]->data)[i]->word << std::endl;
+    }
+
+
 
     std::cout << "TEST" << std::endl;
 
