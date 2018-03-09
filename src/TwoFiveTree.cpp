@@ -219,3 +219,28 @@ void TwoFiveTree::insertWord(TwoFiveNode *node, TwoFiveNode *parent, std::string
     if (node->isFull())
         split(node, parent);
 }
+
+void TwoFiveTree::deleteWord(std::string word)
+{
+    //search word (should return where it is located or the word?
+    //if (leaf) call deleteLeaf function
+    //if (!leaf) call deleteNotLeaf function
+    //deal with merge resolutions
+
+}
+
+std::string TwoFiveTree::searchWord(TwoFiveNode *n, std::string w)
+{
+    // start traversing from root
+    // go through data in the root Node.
+    for (int i = 0; i < n->numData; i++)
+    {
+        if (w > (*n->data)[i]->word)
+        {
+
+        }
+
+    }
+
+    return;
+}

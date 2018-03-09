@@ -59,7 +59,7 @@ private:
 public:
     TwoFiveTree();
     ~TwoFiveTree();
-    bool searchWord(std::string word);
+    std::string searchWord(TwoFiveNode *n, std::string word);
     void insertWord(std::string word);
     void deleteWord(std::string word);
     std::vector<std::string> sort();
