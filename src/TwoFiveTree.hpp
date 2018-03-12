@@ -38,6 +38,7 @@ public:
         // For non leaf nodes
         TwoFiveNode(std::vector<DataPair*>*& data, std::vector<TwoFiveNode*>*& pointers);
         bool isFull();
+        bool isNullNode(TwoFiveNode *n);
         int insertDataPair(DataPair*& dataPair);
         void insertDataPair(DataPair*& dataPair, int index);
         void insertPointer(TwoFiveNode* node, int index);
@@ -59,13 +60,15 @@ private:
 public:
     TwoFiveTree();
     ~TwoFiveTree();
-    std::string searchWord(TwoFiveNode *n, std::string word);
+    TwoFiveNode searchWord(TwoFiveNode *n, TwoFiveNode *p, std::string word);
     void insertWord(std::string word);
-    void deleteWord(std::string word);
+    void deleteWord(TwoFiveNode *n, TwoFiveNode *p, std::string word);
     std::vector<std::string> sort();
     void rangeSearch(std::string first, std::string last);
+    void printTree(TwoFiveNode *n);
+    void deleteFromLeaf(std::string word, TwoFiveNode *n);
+    void deleteFromNonLeaf(std::string word);
     TwoFiveNode* getRoot() {return this->root;}
-
 
 };
 

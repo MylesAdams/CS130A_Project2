@@ -120,30 +120,36 @@ int main()
     tft->insertWord("57");
     tft->insertWord("70");
 
+    //prints left, right, parent. So root is last
+    tft->printTree(tft->getRoot());
 
 
+    tft->deleteWord(tft->getRoot(), tft->getRoot(), "70");
+
+    std::cout << "\n\n Deleted 70.. Result: \n";
+
+    tft->printTree(tft->getRoot());
 
 
-    for (int i = 0; i < tft->getRoot()->numData; i++)
-    {
-        for (int j = 0; j < (*tft->getRoot()->pointers)[i]->data->size(); j++)
-        {
-            std::cout << (*(*tft->getRoot()->pointers)[i]->data)[j]->word << std::endl;
-        }
-        std::cout << (*tft->getRoot()->data)[i]->word << std::endl;
-    }
+//    for (int i = 0; i < tft->getRoot()->numData; i++)
+//    {
+//        for (int j = 0; j < (*tft->getRoot()->pointers)[i]->data->size(); j++)
+//        {
+//            std::cout << (*(*tft->getRoot()->pointers)[i]->data)[j]->word << std::endl;
+//        }
+//        std::cout << "Root: " << (*tft->getRoot()->data)[i]->word << std::endl;
+//    }
+//
+//    int index = tft->getRoot()->numData;
+//    std::vector<TwoFiveTree::DataPair*> vec = (*(*tft->getRoot()->pointers)[index]->data);
+//    int endSize = vec.size();
+//    for (int i = 0; i < endSize; i++)
+//    {
+//        std::cout << (*(*tft->getRoot()->pointers)[tft->getRoot()->numData]->data)[i]->word << std::endl;
+//    }
 
-    int index = tft->getRoot()->numData;
-    std::vector<TwoFiveTree::DataPair*> vec = (*(*tft->getRoot()->pointers)[index]->data);
-    int endSize = vec.size();
-    for (int i = 0; i < endSize; i++)
-    {
-        std::cout << (*(*tft->getRoot()->pointers)[tft->getRoot()->numData]->data)[i]->word << std::endl;
-    }
 
-
-
-    std::cout << "TEST" << std::endl;
+    std::cout << "\n" << std::endl;
 
     return  0;
 }

@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 
 /* Begin DataPair for 2-5 Tree */
 TwoFiveTree::DataPair::DataPair(std::string word)
@@ -220,27 +221,140 @@ void TwoFiveTree::insertWord(TwoFiveNode *node, TwoFiveNode *parent, std::string
         split(node, parent);
 }
 
-void TwoFiveTree::deleteWord(std::string word)
+void TwoFiveTree::deleteWord(TwoFiveNode *n, TwoFiveNode *p, std::string word)
 {
-    //search word (should return where it is located or the word?
-    //if (leaf) call deleteLeaf function
-    //if (!leaf) call deleteNotLeaf function
+    //search word (should return where it is located or the node?)
+    searchWord(n, p, word);
+
+
+    if (!n->isNullNode(n))
+    {
+        if (word == "70")
+        {
+            for (int i = 0; i < n->numData; i++)
+                std::cout << (*(*n->pointers)[i]->data)[i]->word << " ";
+
+        }
+        if (n->isLeaf())
+        {
+            deleteFromLeaf(word, n);
+        }
+
+        else if (!n->isLeaf())
+        {
+
+        }
+    }
+
+
+    //if return of searchWord is (leaf) call deleteLeaf function
+    //if return of searchWord is not (!leaf) call deleteNotLeaf function
     //deal with merge resolutions
 
 }
 
-std::string TwoFiveTree::searchWord(TwoFiveNode *n, std::string w)
+TwoFiveTree::TwoFiveNode TwoFiveTree::searchWord(TwoFiveNode *n, TwoFiveNode *p, std::string w)
 {
     // start traversing from root
-    // go through data in the root Node.
-    for (int i = 0; i < n->numData; i++)
+    // go through data starting with biggest value in back.
+
+    if (w > (*n->data).back()->word)
     {
-        if (w > (*n->data)[i]->word)
+        if (n->isLeaf())
         {
-
+            for (int i = 0; i < n->numData; i++)
+                if ((*n->data)[i]->word == w)
+                    return *n;
         }
-
+        else
+           return searchWord((*n->pointers)[n->numData], n, w);
+    }
+    else
+    {
+        for (int i = 0; i < n->numData; i++)
+        {
+            if ((*n->data)[i]->word == w)
+                return *n;
+            else if (w < (*n->data)[i]->word)
+                if (!n->isLeaf())
+                    return searchWord((*n->pointers)[i], n, w);
+        }
     }
 
+    TwoFiveNode* nullNode;
+    for (int i = 0; i < n->numData; i++)
+        (*nullNode->data)[i]->word = "NULL";
+    return *nullNode;
+}
+
+void TwoFiveTree::deleteFromLeaf(std::string word, TwoFiveNode *n)
+{
+    bool foundWord = false;
+
+    for (int i = 0; i < n->numData; i++)
+    {
+        if ((*n->data)[i]->word == word)
+            foundWord = true;
+
+        if (foundWord && i < (n->numData - 1))
+            (*n->data)[i]->word = (*n->data)[i+1]->word;
+        else if (foundWord && i == (n->numData - 1))
+        {
+            (*n->data)[i]->word = "";
+            n->numData--;
+        }
+    }
+
+}
+
+void TwoFiveTree::deleteFromNonLeaf(std::string word)
+{
     return;
+}
+
+void TwoFiveTree::printTree(TwoFiveNode *n)
+{
+//    for (int i = 0; i < n->numData; i++)
+//    {
+//        for (int j = 0; j < (*n->pointers)[i]->data->size(); j++)
+//        {
+//            std::cout << (*(*n->pointers)[i]->data)[j]->word << std::endl;
+//        }
+//        std::cout << "Root: " << (*n->data)[i]->word << std::endl;
+//
+//    }
+
+
+    if (!n->isLeaf())
+    {
+        for (int i = 0; i <= n->numData; i++)
+            printTree((*n->pointers)[i]);
+    }
+
+    for (int i = 0; i < n->numData; i++)
+        std::cout << (*n->data)[i]->word << std::endl;
+
+//    if (!n->isLeaf())
+//    {
+//        for (int i = 0; i <= n->numData; i++)
+//            printTree()
+//    }
+//    int index = n->numData;
+//
+//    std::vector<TwoFiveTree::DataPair*> vec = *(*n->pointers)[index]->data;
+//    int endSize = vec.size();
+//    for (int i = 0; i < endSize; i++)
+//    {
+//        std::cout << (*(*n->pointers)[n->numData]->data)[i]->word << std::endl;
+//    }
+}
+
+bool TwoFiveTree::TwoFiveNode::isNullNode(TwoFiveNode *n){
+    bool flag = true;
+
+    for (int i = 0; i < n->numData; i++)
+       if((*n->data)[i]->word != "NULL")
+           flag = false;
+
+    return flag;
 }
