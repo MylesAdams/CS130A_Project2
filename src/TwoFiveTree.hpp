@@ -60,14 +60,14 @@ private:
 public:
     TwoFiveTree();
     ~TwoFiveTree();
-    TwoFiveNode searchWord(TwoFiveNode *n, TwoFiveNode *p, std::string word);
+    TwoFiveNode* searchWord(TwoFiveNode *n, TwoFiveNode *p, std::string word);
     void insertWord(std::string word);
-    void deleteWord(TwoFiveNode *n, TwoFiveNode *p, std::string word);
+    void deleteWord(TwoFiveNode *nodeCheck, TwoFiveNode *p, std::string word);
     std::vector<std::string> sort();
     void rangeSearch(std::string first, std::string last);
     void printTree(TwoFiveNode *n);
     void deleteFromLeaf(std::string word, TwoFiveNode *n);
-    void deleteFromNonLeaf(std::string word);
+    void deleteFromNonLeaf(std::string word, TwoFiveNode *n);
     TwoFiveNode* getRoot() {return this->root;}
 
 };

@@ -224,25 +224,20 @@ void TwoFiveTree::insertWord(TwoFiveNode *node, TwoFiveNode *parent, std::string
 void TwoFiveTree::deleteWord(TwoFiveNode *n, TwoFiveNode *p, std::string word)
 {
     //search word (should return where it is located or the node?)
-    searchWord(n, p, word);
+    TwoFiveNode* nodeCheck = searchWord(n, p, word);
 
 
-    if (!n->isNullNode(n))
+    if (!nodeCheck->isNullNode(nodeCheck))
     {
-        if (word == "70")
-        {
-            for (int i = 0; i < n->numData; i++)
-                std::cout << (*(*n->pointers)[i]->data)[i]->word << " ";
 
-        }
-        if (n->isLeaf())
+        if (nodeCheck->isLeaf())
         {
-            deleteFromLeaf(word, n);
+            deleteFromLeaf(word, nodeCheck);
         }
 
-        else if (!n->isLeaf())
+        else if (!nodeCheck->isLeaf())
         {
-
+            deleteFromNonLeaf(word, nodeCheck);
         }
     }
 
@@ -253,28 +248,21 @@ void TwoFiveTree::deleteWord(TwoFiveNode *n, TwoFiveNode *p, std::string word)
 
 }
 
-TwoFiveTree::TwoFiveNode TwoFiveTree::searchWord(TwoFiveNode *n, TwoFiveNode *p, std::string w)
+TwoFiveTree::TwoFiveNode* TwoFiveTree::searchWord(TwoFiveNode *n, TwoFiveNode *p, std::string w)
 {
     // start traversing from root
     // go through data starting with biggest value in back.
 
     if (w > (*n->data).back()->word)
     {
-        if (n->isLeaf())
-        {
-            for (int i = 0; i < n->numData; i++)
-                if ((*n->data)[i]->word == w)
-                    return *n;
-        }
-        else
-           return searchWord((*n->pointers)[n->numData], n, w);
+        return searchWord((*n->pointers)[n->numData], n, w);
     }
     else
     {
         for (int i = 0; i < n->numData; i++)
         {
             if ((*n->data)[i]->word == w)
-                return *n;
+                return n;
             else if (w < (*n->data)[i]->word)
                 if (!n->isLeaf())
                     return searchWord((*n->pointers)[i], n, w);
@@ -284,7 +272,7 @@ TwoFiveTree::TwoFiveNode TwoFiveTree::searchWord(TwoFiveNode *n, TwoFiveNode *p,
     TwoFiveNode* nullNode;
     for (int i = 0; i < n->numData; i++)
         (*nullNode->data)[i]->word = "NULL";
-    return *nullNode;
+    return nullNode;
 }
 
 void TwoFiveTree::deleteFromLeaf(std::string word, TwoFiveNode *n)
@@ -307,23 +295,30 @@ void TwoFiveTree::deleteFromLeaf(std::string word, TwoFiveNode *n)
 
 }
 
-void TwoFiveTree::deleteFromNonLeaf(std::string word)
+void TwoFiveTree::deleteFromNonLeaf(std::string word, TwoFiveNode *n)
 {
-    return;
+    bool foundWord = false;
+    for (int i = 0; i < n->numData; i++)
+    {
+        if ((*n->data)[i]->word == word)
+            foundWord = true;
+
+        if (n->numData <= ((*n->pointers).size() - 1) && foundWord)
+        {
+            (*n->data)[i]->word = (*n->pointers)[i]->data->back()->word;
+            (*n->pointers)[i]->data->back()->word = "";
+            (*n->pointers)[i]->numData--;
+            foundWord = false;
+            //(*n->data)[i]->word = (*n->data)[i+1]->word;
+        }
+
+
+    }
+
 }
 
 void TwoFiveTree::printTree(TwoFiveNode *n)
 {
-//    for (int i = 0; i < n->numData; i++)
-//    {
-//        for (int j = 0; j < (*n->pointers)[i]->data->size(); j++)
-//        {
-//            std::cout << (*(*n->pointers)[i]->data)[j]->word << std::endl;
-//        }
-//        std::cout << "Root: " << (*n->data)[i]->word << std::endl;
-//
-//    }
-
 
     if (!n->isLeaf())
     {
@@ -334,19 +329,6 @@ void TwoFiveTree::printTree(TwoFiveNode *n)
     for (int i = 0; i < n->numData; i++)
         std::cout << (*n->data)[i]->word << std::endl;
 
-//    if (!n->isLeaf())
-//    {
-//        for (int i = 0; i <= n->numData; i++)
-//            printTree()
-//    }
-//    int index = n->numData;
-//
-//    std::vector<TwoFiveTree::DataPair*> vec = *(*n->pointers)[index]->data;
-//    int endSize = vec.size();
-//    for (int i = 0; i < endSize; i++)
-//    {
-//        std::cout << (*(*n->pointers)[n->numData]->data)[i]->word << std::endl;
-//    }
 }
 
 bool TwoFiveTree::TwoFiveNode::isNullNode(TwoFiveNode *n){
