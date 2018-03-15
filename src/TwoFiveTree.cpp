@@ -241,11 +241,6 @@ void TwoFiveTree::deleteWord(TwoFiveNode *n, TwoFiveNode *p, std::string word)
         }
     }
 
-
-    //if return of searchWord is (leaf) call deleteLeaf function
-    //if return of searchWord is not (!leaf) call deleteNotLeaf function
-    //deal with merge resolutions
-
 }
 
 TwoFiveTree::TwoFiveNode* TwoFiveTree::searchWord(TwoFiveNode *n, TwoFiveNode *p, std::string w)
@@ -303,15 +298,27 @@ void TwoFiveTree::deleteFromNonLeaf(std::string word, TwoFiveNode *n)
         if ((*n->data)[i]->word == word)
             foundWord = true;
 
-        if (n->numData <= ((*n->pointers).size() - 1) && foundWord)
+        if ((*n->pointers)[i]->numData >= 2 && foundWord)
         {
             (*n->data)[i]->word = (*n->pointers)[i]->data->back()->word;
-            (*n->pointers)[i]->data->back()->word = "";
+            (*n->pointers)[i]->data->erase((*n->pointers)[i]->data->begin()+i);
             (*n->pointers)[i]->numData--;
             foundWord = false;
-            //(*n->data)[i]->word = (*n->data)[i+1]->word;
         }
 
+        else if ((*n->pointers)[i+1]->numData >= 2 && foundWord)
+        {
+            (*n->data)[i]->word = (*n->pointers)[i+1]->data->front()->word;
+            (*n->pointers)[i]->data->erase((*n->pointers)[i]->data->begin()+i);
+            (*n->pointers)[i]->numData--;
+            foundWord = false;
+        }
+
+        else if (foundWord)
+        {
+            merge((*n->pointers)[i+1],(*n->pointers)[i]);
+            deleteWord(root, root, word);
+        }
 
     }
 
@@ -339,4 +346,22 @@ bool TwoFiveTree::TwoFiveNode::isNullNode(TwoFiveNode *n){
            flag = false;
 
     return flag;
+}
+
+void TwoFiveTree::merge(TwoFiveNode *n1, TwoFiveNode *n2)
+{
+    for (int i = 0; i < n2->numData; i++)
+    {
+        (*n1->data).push_back((*n2->data)[i]);
+    }
+
+    n1->numData += n2->numData;
+
+    if (!n2->isLeaf())
+    {
+        for (int i = 0; i < n2->numData; i++)
+            n1->pointers[i+(n1->numData-n2->numData)] = n2->pointers[i];
+    }
+
+    delete(n2);
 }

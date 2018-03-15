@@ -65,6 +65,7 @@ public:
     void deleteWord(TwoFiveNode *nodeCheck, TwoFiveNode *p, std::string word);
     std::vector<std::string> sort();
     void rangeSearch(std::string first, std::string last);
+    void merge(TwoFiveNode *n1, TwoFiveNode *n2);
     void printTree(TwoFiveNode *n);
     void deleteFromLeaf(std::string word, TwoFiveNode *n);
     void deleteFromNonLeaf(std::string word, TwoFiveNode *n);
