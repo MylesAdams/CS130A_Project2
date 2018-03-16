@@ -82,6 +82,8 @@ public:
     void deleteFromNonLeaf(std::string word, TwoFiveNode *n);
 	void split(TwoFiveNode* node, TwoFiveNode* parent);
     TwoFiveNode* getRoot() {return this->root;}
+    void rotateLeft(Truple tru);
+    void rotateRight(Truple tru);
 
 };
 
