@@ -124,9 +124,9 @@ int main()
     tft->printTree(tft->getRoot());
 
 
-    tft->deleteWord(tft->getRoot(), tft->getRoot(), "57");
+    tft->deleteWord(tft->getRoot(), tft->getRoot(), "70");
 
-    std::cout << "\n\n Deleted 57.. Result: \n";
+    std::cout << "\n\n Deleted 70.. Result: \n";
 
     tft->printTree(tft->getRoot());
 

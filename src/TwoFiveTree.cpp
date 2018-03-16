@@ -274,9 +274,6 @@ TwoFiveTree::Truple TwoFiveTree::searchWord(TwoFiveNode *n, TwoFiveNode *p, std:
 
 void TwoFiveTree::deleteFromLeaf(Truple tru)
 {
-    bool foundWord = false;
-
-
     //case 1: leaf contains more than 1 value. Simply delete value
     if (tru.node->numData > 1)
     {
@@ -287,35 +284,54 @@ void TwoFiveTree::deleteFromLeaf(Truple tru)
 
             else if (i == tru.node->numData-1)
             {
-                (*tru.node->data)->erase[i];
+                delete((*tru.node->data)[i]);
                 tru.node->numData--;
             }
 
         }
     }
 
-
-    //case 2: leaf contains 1 but right neighbor has an extra. Call rotate right
-
-
-
-    //case 3: leaf contains 1 but left neighbor has an extra. Call rotate left
-
-
-    //case 4: leaf contains 1 and no neighbors have extras
-
-
-    for (int i = 0; i < n->numData; i++)
+    else
     {
-        if ((*n->data)[i]->word == word)
-            foundWord = true;
-
-        if (foundWord && i < (n->numData - 1))
-            (*n->data)[i]->word = (*n->data)[i+1]->word;
-        else if (foundWord && i == (n->numData - 1))
+        for (int i = 0; i < tru.parent->pointers->size(); i++)
         {
-            (*n->data)[i]->word = "";
-            n->numData--;
+            if ((*tru.parent->pointers)[i]->data[tru.index] == tru.node->data[tru.index])
+            {
+                //found which pointer in parent holds node
+
+                //case 2: leaf contains 1 but left neighbor has an extra. Call rotate right
+                if(i > 0 && (*tru.parent->pointers)[i-1]->numData > 1)
+                {
+                    //rotate right
+                }
+
+                //case 3: leaf contains 1 but right neighbor has an extra. Call rotate left
+                else if (i < tru.parent->pointers->size()-1 && (*tru.parent->pointers)[i+1]->numData > 1)
+                {
+                    //rotate left
+                }
+
+                //case 4: leaf contains 1 and no neighbors have extras
+                else
+                {
+                    if (i > 0 && i < tru.parent->pointers->size()-1)
+                    {
+                        //merge with a node to the right (append this node that will be deleted to it)
+                        //possible code:
+                        //delete(merge(tru.parent->pointers[i],tru.parent->pointers[i-1],tru.parent)[1])
+                        //decrement numdata on returned node
+
+                    }
+                    else
+                    {
+                        //merge with a node to the left (append this node that will be deleted to it)
+                        //possible code:
+                        //delete(merge(tru.parent->pointers[i],tru.parent->pointers[i+1],tru.parent)[3])
+                        //decrement numdata on returned node
+                    }
+
+                }
+            }
         }
     }
 
@@ -347,7 +363,7 @@ void TwoFiveTree::deleteFromNonLeaf(std::string word, TwoFiveNode *n)
 
         else if (foundWord)
         {
-            merge((*n->pointers)[i+1],(*n->pointers)[i]);
+            //merge((*n->pointers)[i+1],(*n->pointers)[i]);
             deleteWord(root, root, word);
         }
 
