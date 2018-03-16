@@ -64,7 +64,7 @@ private:
     TwoFiveNode* root;
     int count;
     void insertWord(TwoFiveNode* node, TwoFiveNode* parent, std::string& word);
-    void split(TwoFiveNode* node, TwoFiveNode* parent);
+    
 
 
 
@@ -76,10 +76,11 @@ public:
     void deleteWord(TwoFiveNode *nodeCheck, TwoFiveNode *p, std::string word);
     std::vector<std::string> sort();
     void rangeSearch(std::string first, std::string last);
-    void merge(TwoFiveNode *n1, TwoFiveNode *n2, TwoFiveNode *parent);
+    TwoFiveNode* merge(TwoFiveNode *node, TwoFiveNode *parent);
     void printTree(TwoFiveNode *n);
     void deleteFromLeaf(Truple node);
     void deleteFromNonLeaf(std::string word, TwoFiveNode *n);
+	void split(TwoFiveNode* node, TwoFiveNode* parent);
     TwoFiveNode* getRoot() {return this->root;}
 
 };

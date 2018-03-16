@@ -396,28 +396,74 @@ void TwoFiveTree::printTree(TwoFiveNode *n)
 //    return flag;
 //}
 
-void TwoFiveTree::merge(TwoFiveNode *n1, TwoFiveNode *n2, TwoFiveNode *parent)
+TwoFiveTree::TwoFiveNode* TwoFiveTree::merge(TwoFiveNode *node, TwoFiveNode *parent)
 {
-    if (n1->numData != 1 || n1->numData != 1)
+	if (node == nullptr)
+		throw std::runtime_error("Tried to merge nullptr");
+    if (node->numData != 1 || node->numData != 1)
         throw std::runtime_error("Tried to merge nodes of size greater than one");
 
-    int n1Index;
-    for (n1Index = 0; (*parent->pointers)[n1Index] != n1; n1Index++) {}
+	TwoFiveNode* leftNode;
+	TwoFiveNode* rightNode;
 
-    (*n1->data).push_back((*parent->data)[n1Index]);
-    (*n1->data).push_back((*n2->data)[0]);
+	int nodeNdx, leftNdx, rightNdx;
+    for (nodeNdx = 0; (*parent->pointers)[nodeNdx] != node; nodeNdx++) {}
 
+	if (nodeNdx == (*parent->pointers).size() - 1)
+	{
+		leftNode = (*parent->pointers)[nodeNdx - 1];
+		rightNode = (*parent->pointers)[nodeNdx];
+		leftNdx = nodeNdx - 1;
+		rightNdx = nodeNdx;
+	}
+	else
+	{
+		leftNode = (*parent->pointers)[nodeNdx];
+		rightNode = (*parent->pointers)[nodeNdx + 1];
+		leftNdx = nodeNdx;
+		rightNdx = nodeNdx + 1;
+	}
 
+	if (node->isLeaf())
+	{
+		// Leafs being merged must be of size 1
+		if (node->numData != 1 || node->numData != 1)
+			throw std::runtime_error("Tried to merge nodes of size greater than one");
 
-    n1->numData += 1;
+		// Append seperator from parent and delete value
+		(*leftNode->data).push_back((*parent->data)[leftNdx]);
+		(*parent->data).erase((*parent->data).begin() + leftNdx);
+		parent->numData--;
+		leftNode->numData++;
 
-    if (!n2->isLeaf())
-    {
-        for (int i = 0; i < n2->numData; i++)
-            n1->pointers[i+(n1->numData-n2->numData)] = n2->pointers[i];
-    }
+		// Append value from right neighbor and delete right node
+		(*leftNode->data).push_back((*rightNode->data)[0]);
+		(*rightNode->pointers).erase((*rightNode->pointers).begin());
+		leftNode->numData++;
+		delete rightNode;
+		(*parent->pointers).erase((*parent->pointers).begin() + leftNdx + 1);
+	}
+	else
+	{
+		for (int i = 0; i < rightNode->numData; i++)
+		{
+			(*leftNode->data).push_back((*rightNode->data)[i]);
+			(*leftNode->pointers).push_back((*rightNode->pointers)[i]);
+		}
 
-    delete(n2);
+		(*leftNode->pointers).push_back((*rightNode->pointers)[rightNode->numData]);
+
+		(*rightNode->data).clear();
+		(*rightNode->pointers).clear();
+
+		delete rightNode;
+
+		if (leftNode->isFull())
+			split(leftNode, parent);
+			
+			// Continue work here
+
+	}
 }
 
 TwoFiveTree::Truple::Truple()
