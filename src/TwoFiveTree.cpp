@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <exception>
 
 /* Begin DataPair for 2-5 Tree */
 TwoFiveTree::DataPair::DataPair(std::string word)
@@ -348,14 +349,20 @@ bool TwoFiveTree::TwoFiveNode::isNullNode(TwoFiveNode *n){
     return flag;
 }
 
-void TwoFiveTree::merge(TwoFiveNode *n1, TwoFiveNode *n2)
+void TwoFiveTree::merge(TwoFiveNode *n1, TwoFiveNode *n2, TwoFiveNode *parent)
 {
-    for (int i = 0; i < n2->numData; i++)
-    {
-        (*n1->data).push_back((*n2->data)[i]);
-    }
+    if (n1->numData != 1 || n1->numData != 1)
+        throw std::runtime_error("Tried to merge nodes of size greater than one");
 
-    n1->numData += n2->numData;
+    int n1Index;
+    for (n1Index = 0; (*parent->pointers)[n1Index] != n1; n1Index++) {}
+
+    (*n1->data).push_back((*parent->data)[n1Index]);
+    (*n1->data).push_back((*n2->data)[0]);
+
+
+
+    n1->numData += 1;
 
     if (!n2->isLeaf())
     {
