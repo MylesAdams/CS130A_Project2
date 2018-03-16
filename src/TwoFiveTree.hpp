@@ -77,6 +77,7 @@ public:
     std::vector<std::string> sort();
     void rangeSearch(std::string first, std::string last);
     TwoFiveNode* merge(TwoFiveNode *node, TwoFiveNode *parent);
+    DataPair* mergeAndDelete(TwoFiveNode* node, TwoFiveNode* parent, std::string word);
     void printTree(TwoFiveNode *n);
     void deleteFromLeaf(Truple node);
     void deleteFromNonLeaf(std::string word, TwoFiveNode *n);
@@ -84,6 +85,9 @@ public:
     TwoFiveNode* getRoot() {return this->root;}
     void rotateLeft(Truple tru);
     void rotateRight(Truple tru);
+
+    void deleteWordFromTree(std::string word);
+    void deleteWordFromTree(TwoFiveNode* node, TwoFiveNode* parent, std::string word);
 
 };
 
