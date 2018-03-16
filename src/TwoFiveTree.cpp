@@ -420,6 +420,47 @@ void TwoFiveTree::merge(TwoFiveNode *n1, TwoFiveNode *n2, TwoFiveNode *parent)
     delete(n2);
 }
 
+void TwoFiveTree::rotateLeft(TwoFiveTree::Truple tru)
+{
+    //left neighbor only has 1 value so we are borrowing from
+    //the right neighbor and moving parent down
+
+    //take value of parent and place it where current node is
+    //take first value of neighbor and place it where parent was
+    //readjust vector of neighbor
+
+    int i;
+    for (i = 0; (*tru.parent->pointers)[i]->data[tru.index] != tru.node->data[tru.index]; i++);
+
+    (*tru.node->data)[tru.index]->word = (*tru.parent->data)[i]->word;
+    (*tru.parent->data)[i]->word = (*(*tru.parent->pointers)[i+1]->data)[0]->word;
+
+    for (int j = 0; j < (*tru.parent->pointers)[i+1]->numData - 1; j++)
+    {
+        (*(*tru.parent->pointers)[i+1]->data)[j]->word = (*(*tru.parent->pointers)[i+1]->data)[j+1]->word;
+    }
+
+    delete((*tru.parent->pointers)[i+1]->data->back());
+}
+
+void TwoFiveTree::rotateRight(TwoFiveTree::Truple tru)
+{
+    //right neighbor only has 1 value so we are borrowing from
+    //the left neighbor and moving parent down
+
+    //take value of parent and place it where current node is
+    //take last value of neighbor and place it where parent was
+    //no need to readjust vector of neighbor since we took from back? just delete
+
+    int i;
+    for (i = 0; (*tru.parent->pointers)[i]->data[tru.index] != tru.node->data[tru.index]; i++);
+
+    (*tru.node->data)[tru.index]->word = (*tru.parent->data)[i]->word;
+    (*tru.parent->data)[i]->word = (*(*tru.parent->pointers)[i-1]->data).back()->word;
+
+    delete((*tru.parent->pointers)[i-1]->data->back());
+}
+
 TwoFiveTree::Truple::Truple()
 {
     node = nullptr;
