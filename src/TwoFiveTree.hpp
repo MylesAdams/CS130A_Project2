@@ -49,6 +49,17 @@ public:
 
     };
 
+    struct Truple
+    {
+        TwoFiveNode* node;
+        TwoFiveNode* parent;
+        int index;
+
+        Truple ();
+        Truple (TwoFiveNode* node, TwoFiveNode* parent, int index);
+    };
+
+
 private:
     TwoFiveNode* root;
     int count;
@@ -60,14 +71,14 @@ private:
 public:
     TwoFiveTree();
     ~TwoFiveTree();
-    TwoFiveNode* searchWord(TwoFiveNode *n, TwoFiveNode *p, std::string word);
+    Truple searchWord(TwoFiveNode *n, TwoFiveNode *p, std::string word);
     void insertWord(std::string word);
     void deleteWord(TwoFiveNode *nodeCheck, TwoFiveNode *p, std::string word);
     std::vector<std::string> sort();
     void rangeSearch(std::string first, std::string last);
     void merge(TwoFiveNode *n1, TwoFiveNode *n2);
     void printTree(TwoFiveNode *n);
-    void deleteFromLeaf(std::string word, TwoFiveNode *n);
+    void deleteFromLeaf(Truple node);
     void deleteFromNonLeaf(std::string word, TwoFiveNode *n);
     TwoFiveNode* getRoot() {return this->root;}
 
