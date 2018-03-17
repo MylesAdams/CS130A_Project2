@@ -21,6 +21,7 @@ public:
 
         DataPair(std::string word);
         DataPair(std::string word, int count);
+        ~DataPair();
     };
 
     // Node for 2-5 Tree
@@ -79,7 +80,7 @@ public:
     TwoFiveNode* merge(TwoFiveNode *node, TwoFiveNode *parent);
     DataPair* mergeAndDelete(TwoFiveNode* node, TwoFiveNode* parent, std::string word);
     void printTree(TwoFiveNode *n);
-    void deleteFromLeaf(Truple node);
+    void deleteFromLeaf(Truple &node);
     void deleteFromNonLeaf(std::string word, TwoFiveNode *n);
 	void split(TwoFiveNode* node, TwoFiveNode* parent);
     TwoFiveNode* getRoot() {return this->root;}

@@ -125,12 +125,31 @@ int main()
 
 
     tft->deleteWord(tft->getRoot(), tft->getRoot(), "70");
-    tft->deleteWord(tft->getRoot(), tft->getRoot(), "60");
-
 
     std::cout << "\n\n Deleted 70.. Result: \n";
 
     tft->printTree(tft->getRoot());
+
+    tft->deleteWord(tft->getRoot(), tft->getRoot(), "60");
+
+
+    std::cout << "\n\n Deleted 60.. Result: \n";
+
+    tft->printTree(tft->getRoot());
+
+    tft->deleteWord(tft->getRoot(), tft->getRoot(), "10");
+
+    std::cout << "\n\n Deleted 10.. Result: \n";
+
+    tft->printTree(tft->getRoot());
+
+    tft->deleteWord(tft->getRoot(), tft->getRoot(), "11");
+
+    std::cout << "\n\n Deleted 11.. Result: \n";
+
+
+    tft->printTree(tft->getRoot());
+
 
 
 //    for (int i = 0; i < tft->getRoot()->numData; i++)
@@ -152,6 +171,10 @@ int main()
 
 
     std::cout << "\n" << std::endl;
+
+    TwoFiveTree::DataPair* datapair = new TwoFiveTree::DataPair("Hello");
+    delete datapair;
+    std::cout << datapair->word << std::endl;
 
     return  0;
 }
