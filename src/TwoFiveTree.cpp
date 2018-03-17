@@ -505,6 +505,9 @@ void TwoFiveTree::rotateLeft(TwoFiveTree::Truple tru)
     (*tru.node->data)[tru.index] = (*tru.parent->data)[i];
     (*tru.parent->data)[i] = (*(*tru.parent->pointers)[i+1]->data).front();
 
+    (*(*tru.parent->pointers)[i+1]->data).front() = nullptr;
+
+
     (*(*tru.parent->pointers)[i+1]->data).erase((*(*tru.parent->pointers)[i+1]->data).begin());
     (*tru.parent->pointers)[i+1]->numData--;
 
