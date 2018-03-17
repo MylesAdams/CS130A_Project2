@@ -86,6 +86,7 @@ public:
     TwoFiveNode* getRoot() {return this->root;}
     void rotateLeft(Truple tru);
     void rotateRight(Truple tru);
+    DataPair* findMax(TwoFiveNode* node);
 
     void deleteWordFromTree(std::string word);
     void deleteWordFromTree(TwoFiveNode* node, TwoFiveNode* parent, std::string word);
