@@ -21,6 +21,10 @@ TwoFiveTree::DataPair::DataPair(std::string word, int count)
     this->word = word;
     this->count = count;
 }
+
+TwoFiveTree::DataPair::~DataPair() {
+
+}
 /* End DataPair for 2-5 Tree */
 
 /*===============================================*/
@@ -157,7 +161,7 @@ void TwoFiveTree::split(TwoFiveNode* node, TwoFiveNode* parent)
         newPostNode = new TwoFiveNode(rightData, rightPointers);
         for (auto i = ((*node->pointers).begin() + POINTER_MIDDLE);  i != (*node->pointers).end(); i++)
         {
-            (*node->pointers)[i] = nullptr;
+            *i = nullptr;
         }
         (*node->pointers).erase((*node->pointers).begin() + POINTER_MIDDLE, (*node->pointers).end());
     }
@@ -167,7 +171,7 @@ void TwoFiveTree::split(TwoFiveNode* node, TwoFiveNode* parent)
     // Erase moved data
     for (auto i = ((*node->data).begin() + DATA_MIDDLE);  i != (*node->data).end(); i++)
     {
-        (*node->data)[i] = nullptr;
+        *i = nullptr;
     }
     (*node->data).erase((*node->data).begin() + DATA_MIDDLE, (*node->data).end());
     node->numData = (*node->data).size();
@@ -283,25 +287,36 @@ TwoFiveTree::Truple TwoFiveTree::searchWord(TwoFiveNode *n, TwoFiveNode *p, std:
     return Truple();
 }
 
-void TwoFiveTree::deleteFromLeaf(Truple tru)
+void TwoFiveTree::deleteFromLeaf(Truple &tru)
 {
     //case 1: leaf contains more than 1 value. Simply delete value
     if (tru.node->numData > 1)
     {
-        for (int i = tru.index; i < tru.node->numData; i++)
-        {
-            if (i < tru.node->numData-1)
-                (*tru.node->data)[i]->word = (*tru.node->data)[i+1]->word;
+        auto it = (*tru.node->data).begin()+tru.index;
+//        std::cout << "\ncheck: " << (*tru.node->data).size() << " : " << (*it)->word;
+//        std::cout << "\n\n memory: " << (*tru.node->data)[tru.index];
+//        delete((*tru.node->data)[tru.index]);
+        (*((tru.node)->data)).erase((*((tru.node)->data)).begin()+tru.index);
+        (tru.node)->numData--;
+//        std::cout << "\ncheck: " << (*tru.node->data).size() << " : " << (*it)->word;
+//
+//
+//        std::cout << "\ncheck: " << (*tru.node->data).size() << " : " << (*it)->word;
 
-            else if (i == tru.node->numData-1)
-            {
-                delete((*tru.node->data)[i]);
-                tru.node->numData--;
-            }
+//        for (int i = tru.index; i < tru.node->numData; i++)
+//        {
+//            if (i < tru.node->numData-1)
+//                (*tru.node->data)[i] = (*tru.node->data)[i+1];
+//
+//            else if (i == tru.node->numData-1)
+//            {
+//                delete((*tru.node->data)[i]);
+//                tru.node->numData--;
+//            }
 
-        }
+
+//        }
     }
-
     else
     {
         for (int i = 0; i < tru.parent->pointers->size(); i++)
@@ -313,33 +328,34 @@ void TwoFiveTree::deleteFromLeaf(Truple tru)
                 //case 2: leaf contains 1 but left neighbor has an extra. Call rotate right
                 if(i > 0 && (*tru.parent->pointers)[i-1]->numData > 1)
                 {
-                    //rotate right
+                    rotateRight(tru);
                 }
 
                 //case 3: leaf contains 1 but right neighbor has an extra. Call rotate left
                 else if (i < tru.parent->pointers->size()-1 && (*tru.parent->pointers)[i+1]->numData > 1)
                 {
-                    //rotate left
+                    rotateLeft(tru);
                 }
 
                 //case 4: leaf contains 1 and no neighbors have extras
                 else
                 {
-                    if (i > 0 && i < tru.parent->pointers->size()-1)
-                    {
-                        //merge with a node to the right (append this node that will be deleted to it)
-                        //possible code:
-                        //delete(merge(tru.parent->pointers[i],tru.parent->pointers[i-1],tru.parent)[1])
-                        //decrement numdata on returned node
-
-                    }
-                    else
-                    {
-                        //merge with a node to the left (append this node that will be deleted to it)
-                        //possible code:
-                        //delete(merge(tru.parent->pointers[i],tru.parent->pointers[i+1],tru.parent)[3])
-                        //decrement numdata on returned node
-                    }
+//                    if (i > 0 && i < tru.parent->pointers->size()-1)
+//                    {
+//                        //merge with a node to the right (append this node that will be deleted to it)
+//                        //possible code:
+//                        //delete(merge(tru.parent->pointers[i],tru.parent->pointers[i-1],tru.parent)[1])
+//                        //decrement numdata on returned node
+//
+//                    }
+//                    else
+//                    {
+//                        //merge with a node to the left (append this node that will be deleted to it)
+//                        //possible code:
+//                        //delete(merge(tru.parent->pointers[i],tru.parent->pointers[i+1],tru.parent)[3])
+//                        //decrement numdata on returned node
+//                    }
+                    merge(tru.node, tru.parent);
 
                 }
             }
@@ -480,6 +496,7 @@ TwoFiveTree::TwoFiveNode* TwoFiveTree::merge(TwoFiveNode *node, TwoFiveNode *par
 		delete rightNode;
 
 	}
+    return rightNode;
 }
 
 void TwoFiveTree::rotateLeft(TwoFiveTree::Truple tru)
@@ -494,15 +511,17 @@ void TwoFiveTree::rotateLeft(TwoFiveTree::Truple tru)
     int i;
     for (i = 0; (*tru.parent->pointers)[i]->data[tru.index] != tru.node->data[tru.index]; i++);
 
-    (*tru.node->data)[tru.index]->word = (*tru.parent->data)[i]->word;
-    (*tru.parent->data)[i]->word = (*(*tru.parent->pointers)[i+1]->data)[0]->word;
+    //borrowing from i+1
+    //erase node value
+    //put parent in node value
 
-    for (int j = 0; j < (*tru.parent->pointers)[i+1]->numData - 1; j++)
-    {
-        (*(*tru.parent->pointers)[i+1]->data)[j]->word = (*(*tru.parent->pointers)[i+1]->data)[j+1]->word;
-    }
+    (*tru.node->data).erase((*tru.node->data).begin());
+    (*tru.node->data)[tru.index] = (*tru.parent->data)[i];
+    (*tru.parent->data)[i] = (*(*tru.parent->pointers)[i+1]->data).front();
 
-    delete((*tru.parent->pointers)[i+1]->data->back());
+    (*(*tru.parent->pointers)[i+1]->data).erase((*(*tru.parent->pointers)[i+1]->data).begin());
+    (*tru.parent->pointers)[i+1]->numData--;
+
 }
 
 void TwoFiveTree::rotateRight(TwoFiveTree::Truple tru)
@@ -517,10 +536,9 @@ void TwoFiveTree::rotateRight(TwoFiveTree::Truple tru)
     int i;
     for (i = 0; (*tru.parent->pointers)[i]->data[tru.index] != tru.node->data[tru.index]; i++);
 
-    (*tru.node->data)[tru.index]->word = (*tru.parent->data)[i]->word;
-    (*tru.parent->data)[i]->word = (*(*tru.parent->pointers)[i-1]->data).back()->word;
-
-    delete((*tru.parent->pointers)[i-1]->data->back());
+    (*tru.node->data).erase((*tru.node->data).begin());
+    (*tru.node->data)[tru.index] = (*tru.parent->data)[i-1];
+    (*tru.parent->data)[i-1] = (*(*tru.parent->pointers)[i-1]->data).back();
 }
 
 TwoFiveTree::DataPair* TwoFiveTree::mergeAndDelete(TwoFiveTree::TwoFiveNode *node, TwoFiveTree::TwoFiveNode *parent, std::string word)
@@ -535,7 +553,27 @@ TwoFiveTree::DataPair* TwoFiveTree::mergeAndDelete(TwoFiveTree::TwoFiveNode *nod
             merge(node, parent);
         }
     }
+    return nullptr;
 }
+
+//TwoFiveTree::DataPair* TwoFiveTree::mergeAndDelete(TwoFiveTree::TwoFiveNode *node, TwoFiveTree::TwoFiveNode *parent, std::string word)
+//{
+//    TwoFiveNode* deleteNode;
+//    deleteNode = merge(node, parent);
+//
+//    for (int i = 0; i < deleteNode->numData; i ++)
+//    {
+//        if ((*deleteNode->data)[i]->word == word)
+//        {
+//            delete (*deleteNode->data)[i];
+//            (*deleteNode->data).erase((*deleteNode->data).begin() + i);
+//            break;
+//        }
+//    }
+//
+//    if (parent->numData = 1)
+//        mergeAndDelete()
+//}
 
 void TwoFiveTree::deleteWordFromTree(std::string word)
 {
@@ -568,7 +606,8 @@ void TwoFiveTree::deleteWordFromTree(TwoFiveTree::TwoFiveNode *node, TwoFiveTree
             {
                 if (!node->isLeaf())
                 {
-                    deleteFromLeaf(Truple(node, parent, i));
+                    Truple truple(node, parent, i);
+                    deleteFromLeaf(truple);
                 }
                 else
                 {
