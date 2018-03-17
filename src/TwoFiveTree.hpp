@@ -39,11 +39,9 @@ public:
         // For non leaf nodes
         TwoFiveNode(std::vector<DataPair*>*& data, std::vector<TwoFiveNode*>*& pointers);
         bool isFull();
-        bool isNullNode(TwoFiveNode *n);
         int insertDataPair(DataPair*& dataPair);
         void insertDataPair(DataPair*& dataPair, int index);
         void insertPointer(TwoFiveNode* node, int index);
-        void deleteDataPair(DataPair*& dataPair);
         void insertDataAndPointer(DataPair*& dataPair, TwoFiveNode*& node);
         bool isLeaf();
         ~TwoFiveNode();
@@ -65,29 +63,30 @@ private:
     TwoFiveNode* root;
     int count;
     void insertWord(TwoFiveNode* node, TwoFiveNode* parent, std::string& word);
-    
+    std::vector<std::string> sortedOutput;
 
 
 
 public:
     TwoFiveTree();
     ~TwoFiveTree();
+    bool search(std::string word);
     Truple searchWord(TwoFiveNode *n, TwoFiveNode *p, std::string word);
     void insertWord(std::string word);
-    void deleteWord(TwoFiveNode *nodeCheck, TwoFiveNode *p, std::string word);
     std::vector<std::string> sort();
+    void sort(TwoFiveNode *node);
     void rangeSearch(std::string first, std::string last);
+    void rangeSearch(TwoFiveNode *node, std::string first, std::string last);
     TwoFiveNode* merge(TwoFiveNode *node, TwoFiveNode *parent);
     DataPair* mergeAndDelete(TwoFiveNode* node, TwoFiveNode* parent, std::string word);
     void printTree(TwoFiveNode *n);
     void deleteFromLeaf(Truple &node);
-    void deleteFromNonLeaf(std::string word, TwoFiveNode *n);
+    void deleteFromNonLeaf(TwoFiveNode* node, TwoFiveNode* parent, std::string word);
 	void split(TwoFiveNode* node, TwoFiveNode* parent);
     TwoFiveNode* getRoot() {return this->root;}
     void rotateLeft(Truple tru);
     void rotateRight(Truple tru);
     DataPair* findMax(TwoFiveNode* node);
-
     void deleteWordFromTree(std::string word);
     void deleteWordFromTree(TwoFiveNode* node, TwoFiveNode* parent, std::string word);
 

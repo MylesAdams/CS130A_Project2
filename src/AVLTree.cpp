@@ -268,8 +268,10 @@ void AVLTree::inOrderRange(AVLNode* root, std::string first, std::string last)
     if (root == nullptr)
         return;
 
-    inOrderRange(root->left, first, last);
+    if (root->data > first)
+        inOrderRange(root->left, first, last);
     if (root->data >= first && root->data <= last)
-        std::cout << root->data << std::endl;
-    inOrderRange(root->right, first, last);
+        std::cout << root->data << "\n";
+    if (root->data < last)
+        inOrderRange(root->right, first, last);
 }
