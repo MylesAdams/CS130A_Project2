@@ -1,7 +1,3 @@
-//
-// Created by Myles Adams on 2/27/18.
-//
-
 #include <iostream>
 #include "AVLTree.hpp"
 #include "TwoFiveTree.hpp"
@@ -164,8 +160,6 @@ int main()
         }
     }
 
-
-
     auto start = std::chrono::high_resolution_clock::now();
     auto end = std::chrono::high_resolution_clock::now();
     auto dur = end - start;
@@ -181,8 +175,10 @@ int main()
     std::cout.precision(17);
     std::cout << std::boolalpha;
 
+
     /* Uncomment the line below to test program and write timings to ../test_output.txt */
-    //testAll(bst, hashTable);
+//    testAll(avl, tft);
+
 
     // Command Line user interface
     while (true)
@@ -196,8 +192,7 @@ int main()
             std::cin.clear();
             std::cin.ignore(512, '\n');
             std::cout << "Invalid entry.\n";
-            std::cout
-                    << "Enter a number to execute an action.\n1 (search), 2 (insert), 3 (delete), 4 (sort), 5 (range search).\n";
+            std::cout << "Enter a number to execute an action.\n1 (search), 2 (insert), 3 (delete), 4 (sort), 5 (range search).\n";
             std::cin >> choice;
         }
 
@@ -367,7 +362,7 @@ void testAll(AVLTree *&avl, TwoFiveTree *&tft)
     testOutput.close();
 }
 
-// Test BST Search
+// Test AVL Search
 void testAVLSearch(AVLTree *&avl, std::ofstream &output)
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -379,12 +374,12 @@ void testAVLSearch(AVLTree *&avl, std::ofstream &output)
     auto dur = end - start;
     auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
-    output << "BST Search (100 words): ";
+    output << "AVL Search (100 words): ";
     output << ns / NANO;
     output << "\n\n";
 }
 
-// Test BST Insert
+// Test AVL Insert
 void testAVLInsert(AVLTree *&avl, std::ofstream &output)
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -396,12 +391,12 @@ void testAVLInsert(AVLTree *&avl, std::ofstream &output)
     auto dur = end - start;
     auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
-    output << "BST Insert (100 words): ";
+    output << "AVL Insert (100 words): ";
     output << ns / NANO;
     output << "\n\n";
 }
 
-// Test BST Delete
+// Test AVL Delete
 void testAVLDelete(AVLTree *&avl, std::ofstream &output)
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -413,12 +408,12 @@ void testAVLDelete(AVLTree *&avl, std::ofstream &output)
     auto dur = end - start;
     auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
-    output << "BST Delete (100 words): ";
+    output << "AVL Delete (100 words): ";
     output << ns / NANO;
     output << "\n\n";
 }
 
-// Test BST Sort
+// Test AVL Sort
 void testAVLSort(AVLTree *&avl, std::ofstream &output)
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -429,12 +424,12 @@ void testAVLSort(AVLTree *&avl, std::ofstream &output)
     auto dur = end - start;
     auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
-    output << "BST Sort (all words): ";
+    output << "AVL Sort (all words): ";
     output << ns / NANO;
     output << "\n\n";
 }
 
-// Test BST Range Search
+// Test AVL Range Search
 void testAVLRangeSearch(AVLTree *&avl, std::ofstream &output)
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -445,7 +440,7 @@ void testAVLRangeSearch(AVLTree *&avl, std::ofstream &output)
     auto dur = end - start;
     auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
-    output << "BST Range Search (10 words): ";
+    output << "AVL Range Search (10 words): ";
     output << ns / NANO;
     output << "\n\n";
 
@@ -457,7 +452,7 @@ void testAVLRangeSearch(AVLTree *&avl, std::ofstream &output)
     dur = end - start;
     ns = std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
-    output << "BST Range Search (100 words): ";
+    output << "AVL Range Search (100 words): ";
     output << ns / NANO;
     output << "\n\n";
 
@@ -469,12 +464,12 @@ void testAVLRangeSearch(AVLTree *&avl, std::ofstream &output)
     dur = end - start;
     ns = std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
-    output << "BST Range Search (1000 words): ";
+    output << "AVL Range Search (1000 words): ";
     output << ns / NANO;
     output << "\n\n";
 }
 
-// Test Hash Table Search
+// Test TFT Search
 void testTFTSearch(TwoFiveTree *&tft, std::ofstream &output)
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -486,12 +481,12 @@ void testTFTSearch(TwoFiveTree *&tft, std::ofstream &output)
     auto dur = end - start;
     auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
-    output << "Hash Search (100 words): ";
+    output << "TFT Search (100 words): ";
     output << ns / NANO;
     output << "\n\n";
 }
 
-// Test Hash Table Insert
+// Test TFT Insert
 void testTFTInsert(TwoFiveTree *&tft, std::ofstream &output)
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -503,12 +498,12 @@ void testTFTInsert(TwoFiveTree *&tft, std::ofstream &output)
     auto dur = end - start;
     auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
-    output << "Hash Insert (100 words): ";
+    output << "TFT Insert (100 words): ";
     output << ns / NANO;
     output << "\n\n";
 }
 
-// Test Hash Table Delete
+// Test TFT Delete
 void testTFTDelete(TwoFiveTree *&tft, std::ofstream &output)
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -520,12 +515,12 @@ void testTFTDelete(TwoFiveTree *&tft, std::ofstream &output)
     auto dur = end - start;
     auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
-    output << "Hash Delete (100 words): ";
+    output << "TFT Delete (100 words): ";
     output << ns / NANO;
     output << "\n\n";
 }
 
-// Test Hash Table Sort
+// Test TFT Sort
 void testTFTSort(TwoFiveTree *&tft, std::ofstream &output)
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -536,12 +531,12 @@ void testTFTSort(TwoFiveTree *&tft, std::ofstream &output)
     auto dur = end - start;
     auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
-    output << "Hash Sort (all words): ";
+    output << "TFT Sort (all words): ";
     output << ns / NANO;
     output << "\n\n";
 }
 
-// Test Hash Table Range Search
+// Test TFT Range Search
 void testTFTRangeSearch(TwoFiveTree *&tft, std::ofstream &output)
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -552,7 +547,7 @@ void testTFTRangeSearch(TwoFiveTree *&tft, std::ofstream &output)
     auto dur = end - start;
     auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
-    output << "Hash Range Search (10 words): ";
+    output << "TFT Range Search (10 words): ";
     output << ns / NANO;
     output << "\n\n";
 
@@ -564,7 +559,7 @@ void testTFTRangeSearch(TwoFiveTree *&tft, std::ofstream &output)
     dur = end - start;
     ns = std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
-    output << "Hash Range Search (100 words): ";
+    output << "TFT Range Search (100 words): ";
     output << ns / NANO;
     output << "\n\n";
 
@@ -576,268 +571,7 @@ void testTFTRangeSearch(TwoFiveTree *&tft, std::ofstream &output)
     dur = end - start;
     ns = std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
-    output << "Hash Range Search (1000 words): ";
+    output << "TFT Range Search (1000 words): ";
     output << ns / NANO;
     output << "\n\n";
 }
-
-//int main()
-//{
-//    std::cout << "CS130A Project 2" << std::endl;
-//
-//    AVLTree* tree = new AVLTree();
-//
-//    std::string a, b, c, d, e;
-//    a = "a";
-//    b = "b";
-//    c = "c";
-//    d = "d";
-//    e = "e";
-//
-//    // LL Test
-////    tree->insertWord(b);
-////    tree->insertWord(a);
-////    tree->insertWord(d);
-////    tree->insertWord(c);
-////    tree->insertWord(e);
-////    tree->deleteWord(a);
-//
-//
-//    // LR Test
-////    tree->insertWord(b);
-////    tree->insertWord(a);
-////    tree->insertWord(d);
-////    tree->insertWord(c);
-////    tree->deleteWord(a);
-//
-//
-//    // RR Test
-////    tree->insertWord(d);
-////    tree->insertWord(b);
-////    tree->insertWord(e);a
-////    tree->insertWord(a);
-////    tree->insertWord(c);
-////    tree->deleteWord(e);
-//
-//    // RL Test
-////    tree->insertWord(c);
-////    tree->insertWord(a);
-////    tree->insertWord(d);
-////    tree->insertWord(b);
-////    tree->deleteWord(d);
-//
-////    tree->insertWord("18");
-////    tree->insertWord("23");
-////    tree->insertWord("27");
-////    tree->insertWord("13");
-////    tree->insertWord("16");
-////    tree->insertWord("10");
-////    tree->insertWord("33");
-////    tree->insertWord("39");
-////    tree->insertWord("28");
-//
-//
-////    std::vector<AVLTree::AVLNode*> nodes;
-////
-////    AVLTree::AVLNode* node = new AVLTree::AVLNode("a");
-////    nodes.push_back(node);
-////
-////    AVLTree::AVLNode* nodeptr = nodes[0];
-////
-////    nodes.erase(nodes.begin(), nodes.end());
-////
-////    TwoFiveTree::TwoFiveNode* node1 = new TwoFiveTree::TwoFiveNode("a");
-////    TwoFiveTree::TwoFiveNode* node2 = new TwoFiveTree::TwoFiveNode("b");
-////
-////    std::vector<TwoFiveTree::TwoFiveNode*>* moreNodes = new std::vector<TwoFiveTree::TwoFiveNode*>({node1, node2});
-////
-////    std::cout << (*(*moreNodes)[0]->data)[0]->word << std::endl;
-////    std::cout << (*(*moreNodes)[1]->data)[0]->word << std::endl;
-////
-////    std::cout << moreNodes->size() << std::endl;
-////    std::cout << (*(*moreNodes)[1]->data).size() << std::endl;
-//
-//
-//
-////    std::cout << nodeptr->data << nodeptr->count << nodes.size() << std::endl;
-//
-//
-////    std::vector<TwoFiveTree::TwoFiveNode*>* nodes2 = new std::vector<TwoFiveTree::TwoFiveNode*>(5);
-////    std::cout << nodes2->size()<< std::endl;
-////    std::cout << ((*nodes2)[0] == nullptr) << std::endl;
-//
-//
-//
-////    tree->root = new AVLTree::AVLNode("C");
-////    tree->root->left = new AVLTree::AVLNode("B");
-////    tree->root->left->left = new AVLTree::AVLNode("A");
-//
-////    AVLTree::rotateRight(tree->root);
-//
-//    TwoFiveTree* tft = new TwoFiveTree();
-//
-//    tft->insertWord("30");
-////    std::cout << (*tft->getRoot()->data)[0]->word << std::endl;
-//    tft->insertWord("10");
-//    tft->insertWord("15");
-//    tft->insertWord("40");
-//    tft->insertWord("45");
-//    tft->insertWord("20");
-//    tft->insertWord("50");
-//    tft->insertWord("55");
-//    tft->insertWord("60");
-//    tft->insertWord("24");
-//    tft->insertWord("28");
-//    tft->insertWord("12");
-//    tft->insertWord("11");
-//    tft->insertWord("14");
-//    tft->insertWord("56");
-//    tft->insertWord("57");
-//    tft->insertWord("70");
-//
-//    //prints left, right, parent. So root is last
-//    tft->printTree(tft->getRoot());
-//
-//
-////    tft->deleteWord(tft->getRoot(), tft->getRoot(), "70");
-////    std::cout << "\n\n Deleted 70.. Result: \n";
-////    tft->printTree(tft->getRoot());
-////
-////    tft->deleteWord(tft->getRoot(), tft->getRoot(), "60");
-////    std::cout << "\n\n Deleted 60.. Result: \n";
-////    tft->printTree(tft->getRoot());
-////
-////    tft->deleteWord(tft->getRoot(), tft->getRoot(), "10");
-////    std::cout << "\n\n Deleted 10.. Result: \n";
-////    tft->printTree(tft->getRoot());
-////
-////    tft->deleteWord(tft->getRoot(), tft->getRoot(), "11");
-////    std::cout << "\n\n Deleted 11.. Result: \n";
-////    tft->printTree(tft->getRoot());
-////
-////    tft->deleteWord(tft->getRoot(), tft->getRoot(), "45");
-////    std::cout << "\n\n Deleted 45.. Result: \n";
-////    tft->printTree(tft->getRoot());
-////
-////    tft->deleteWord(tft->getRoot(), tft->getRoot(), "57");
-////    std::cout << "\n\n Deleted 55.. Result: \n";
-////    tft->printTree(tft->getRoot());
-////
-////    tft->deleteWord(tft->getRoot(), tft->getRoot(), "28");
-////    std::cout << "\n\n Deleted 28.. Result: \n";
-////    tft->printTree(tft->getRoot());
-////
-////    tft->deleteWord(tft->getRoot(), tft->getRoot(), "15");
-////    std::cout << "\n\n Deleted 15.. Result: \n";
-////    tft->printTree(tft->getRoot());
-////
-////    tft->deleteWord(tft->getRoot(), tft->getRoot(), "30");
-////    std::cout << "\n\n Deleted 30.. Result: \n";
-////    tft->printTree(tft->getRoot());
-////
-////    tft->deleteWord(tft->getRoot(), tft->getRoot(), "24");
-////    std::cout << "\n\n Deleted 24.. Result: \n";
-////    tft->printTree(tft->getRoot());
-//
-//    tft->deleteWordFromTree("70");
-//    std::cout << "\n\n Deleted 70.. Result: \n";
-//    tft->printTree(tft->getRoot());
-//
-//    tft->deleteWordFromTree("60");
-//    std::cout << "\n\n Deleted 60.. Result: \n";
-//    tft->printTree(tft->getRoot());
-//
-//    tft->deleteWordFromTree("10");
-//    std::cout << "\n\n Deleted 10.. Result: \n";
-//    tft->printTree(tft->getRoot());
-//
-//    tft->deleteWordFromTree("11");
-//    std::cout << "\n\n Deleted 11.. Result: \n";
-//    tft->printTree(tft->getRoot());
-//
-//    tft->deleteWordFromTree("45");
-//    std::cout << "\n\n Deleted 45.. Result: \n";
-//    tft->printTree(tft->getRoot());
-//
-//    tft->deleteWordFromTree("57");
-//    std::cout << "\n\n Deleted 57.. Result: \n";
-//    tft->printTree(tft->getRoot());
-//
-//    tft->deleteWordFromTree("28");
-//    std::cout << "\n\n Deleted 28.. Result: \n";
-//    tft->printTree(tft->getRoot());
-//
-//    tft->deleteWordFromTree("15");
-//    std::cout << "\n\n Deleted 15.. Result: \n";
-//    tft->printTree(tft->getRoot());
-//
-//
-//    tft->insertWord("57");
-//    tft->insertWord("58");
-//    tft->insertWord("59");
-//    tft->insertWord("60");
-//    tft->insertWord("61");
-//    tft->insertWord("62");
-//    tft->insertWord("63");
-//    tft->insertWord("64");
-//    tft->insertWord("65");
-//
-//    tft->deleteWordFromTree("24");
-//    std::cout << "\n\n Deleted 24.. Result: \n";
-//    tft->printTree(tft->getRoot());
-//
-//    std::cout << std::endl;
-//
-//
-//    tft->printTree(tft->getRoot());
-//
-//    tft->deleteWordFromTree("14");
-//    std::cout << "\n\n Deleted 14.. Result: \n";
-//    tft->printTree(tft->getRoot());
-//
-//
-//
-//
-////
-////    tft->deleteWordFromTree("30");
-////    std::cout << "\n\n Deleted 30.. Result: \n";
-////    tft->printTree(tft->getRoot());
-////
-//
-//
-//    std::cout << "\n\n" << std::endl;
-//
-//    tft->rangeSearch(tft->getRoot(), "20", "56");
-//
-//    std::cout << "\n\n" << std::endl;
-//
-//    std::vector<std::string> sortedVec = tft->sort(tft->getRoot());
-//
-//    for (int i = 0; i < sortedVec.size(); i++)
-//        std::cout << sortedVec[i] << std::endl;
-////    for (int i = 0; i < tft->getRoot()->numData; i++)
-////    {
-////        for (int j = 0; j < (*tft->getRoot()->pointers)[i]->data->size(); j++)
-////        {
-////            std::cout << (*(*tft->getRoot()->pointers)[i]->data)[j]->word << std::endl;
-////        }
-////        std::cout << "Root: " << (*tft->getRoot()->data)[i]->word << std::endl;
-////    }
-////
-////    int index = tft->getRoot()->numData;
-////    std::vector<TwoFiveTree::DataPair*> vec = (*(*tft->getRoot()->pointers)[index]->data);
-////    int endSize = vec.size();
-////    for (int i = 0; i < endSize; i++)
-////    {
-////        std::cout << (*(*tft->getRoot()->pointers)[tft->getRoot()->numData]->data)[i]->word << std::endl;
-////    }
-//
-//
-//    std::cout << "\n" << std::endl;
-//
-//    TwoFiveTree::DataPair* datapair = new TwoFiveTree::DataPair("Hello");
-//    delete datapair;
-//    std::cout << datapair->word << std::endl;
-//
-//    return  0;
-//}

@@ -1,6 +1,3 @@
-//
-// Created by Myles on 3/4/2018.
-//
 
 #ifndef CS130A_PROJECT2_TWOFIVETREE_HPP
 #define CS130A_PROJECT2_TWOFIVETREE_HPP
@@ -61,7 +58,6 @@ public:
 
 private:
     TwoFiveNode* root;
-    int count;
     void insertWord(TwoFiveNode* node, TwoFiveNode* parent, std::string& word);
     std::vector<std::string> sortedOutput;
 
@@ -71,14 +67,14 @@ public:
     TwoFiveTree();
     ~TwoFiveTree();
     bool search(std::string word);
-    Truple searchWord(TwoFiveNode *n, TwoFiveNode *p, std::string word);
+    Truple* searchWord(TwoFiveNode *n, TwoFiveNode *p, std::string word);
     void insertWord(std::string word);
     std::vector<std::string> sort();
     void sort(TwoFiveNode *node);
     void rangeSearch(std::string first, std::string last);
     void rangeSearch(TwoFiveNode *node, std::string first, std::string last);
     TwoFiveNode* merge(TwoFiveNode *node, TwoFiveNode *parent);
-    DataPair* mergeAndDelete(TwoFiveNode* node, TwoFiveNode* parent, std::string word);
+    void mergeAndDelete(TwoFiveNode* node, TwoFiveNode* parent, std::string word);
     void printTree(TwoFiveNode *n);
     void deleteFromLeaf(Truple &node);
     void deleteFromNonLeaf(TwoFiveNode* node, TwoFiveNode* parent, std::string word);

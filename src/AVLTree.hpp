@@ -1,6 +1,3 @@
-//
-// Created by Myles Adams on 2/27/18.
-//
 
 #ifndef CS130A_PROJECT2_AVLTREE_HPP
 #define CS130A_PROJECT2_AVLTREE_HPP
@@ -62,7 +59,7 @@ public:
     static void rotateRight(AVLNode*& root);
     void insertWord(std::string word);
     bool searchWord(std::string word);
-    void deleteWord(std::string& word);
+    void deleteWord(std::string word);
     AVLNode* searchNode(std::string word);
     std::vector<std::string> sort();
     void rangeSearch(std::string first, std::string last);

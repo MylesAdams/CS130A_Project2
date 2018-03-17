@@ -1,6 +1,3 @@
-//
-// Created by Myles Adams on 2/27/18.
-//
 
 #include "AVLTree.hpp"
 #include <string>
@@ -26,6 +23,8 @@ void AVLTree::rotateLeft(AVLNode*& root)
     root->right = newRoot->left;
     newRoot->left = root;
     root = newRoot;
+
+
     setHeight(root->left);
     setHeight(root);
 }
@@ -88,6 +87,8 @@ AVLTree::AVLNode* AVLTree::searchNode(std::string word)
 
 void AVLTree::insertWord(std::string word)
 {
+    if (word == "")
+        return;
     insertWord(root, word);
 }
 
@@ -112,7 +113,7 @@ void AVLTree::insertWord(AVLNode*& root, std::string& word)
     balanceTree(root);
 }
 
-void AVLTree::deleteWord(std::string &word)
+void AVLTree::deleteWord(std::string word)
 {
     AVLNode* tempParent = new AVLNode();
     deleteWord(root, tempParent, word);
@@ -136,16 +137,8 @@ void AVLTree::deleteWord(AVLNode *&node, AVLNode*& parent, std::string &word)
         }
         else if (node->left == nullptr && node->right == nullptr)
         {
-            if (node != root)
-            {
-                if (parent->left == node)
-                    parent->left = nullptr;
-                else
-                    parent->right = nullptr;
-            }
-            else
-                root = nullptr;
             delete node;
+            node = nullptr;
             count--;
         }
         else if (node->left != nullptr && node->right != nullptr)
@@ -153,43 +146,37 @@ void AVLTree::deleteWord(AVLNode *&node, AVLNode*& parent, std::string &word)
             AVLNode* rSubMin = findMinimum(node->right);
 
             std::string newData = rSubMin->data;
-            
             int newCount = rSubMin->count;
-            deleteWord(node, parent, newData);
+
+            rSubMin->count = 1;
 
             node->data = newData;
             node->count = newCount;
+
+            deleteWord(node->right, node, newData);
+
         }
         else
         {
             AVLNode* child = (node->left)? node->left: node->right;
-            if (node != root)
-            {
-                if (node == parent->left)
-                    parent->left = child;
-                else
-                    parent->right = child;
-            }
-            else
-                root = child;
 
             node->left = nullptr;
             node->right = nullptr;
             delete node;
+            node = child;
             count--;
         }
     }
-    if (parent->data != "")
-    {
-        setHeight(parent);
-        balanceTree(parent);
-    }
+
+    setHeight(parent);
+    balanceTree(parent);
 }
 
 AVLTree::AVLNode* AVLTree::findMinimum(AVLNode* node)
 {
     while (node->left != nullptr)
         node = node->left;
+
 
     return node;
 }
@@ -268,10 +255,10 @@ void AVLTree::inOrderRange(AVLNode* root, std::string first, std::string last)
     if (root == nullptr)
         return;
 
-    if (root->data > first)
+    if (root->data > first && root->height != 1)
         inOrderRange(root->left, first, last);
     if (root->data >= first && root->data <= last)
         std::cout << root->data << "\n";
-    if (root->data < last)
+    if (root->data < last && root->height != 1)
         inOrderRange(root->right, first, last);
 }
